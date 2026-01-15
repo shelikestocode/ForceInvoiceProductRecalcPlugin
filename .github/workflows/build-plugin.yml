@@ -1,0 +1,33 @@
+name: Build Dataverse Plugin DLL
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.3.1
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1
+
+    - name: Restore NuGet packages
+      run: nuget restore ForceInvoiceProductRecalcPlugin/ForceInvoiceProductRecalc.csproj
+
+    - name: Build the plugin
+      run: msbuild ForceInvoiceProductRecalcPlugin/ForceInvoiceProductRecalc.csproj /p:Configuration=Release
+
+    - name: Upload DLL artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ForceOutstandingBalanceRecalc
+        path: ForceOutstandingBalancePlugin/bin/Release/**/*.dll
