@@ -29,5 +29,5 @@ jobs:
     - name: Upload DLL artifact
       uses: actions/upload-artifact@v4
       with:
-        name: ForceOutstandingBalanceRecalc
-        path: ForceOutstandingBalancePlugin/bin/Release/**/*.dll
+        name: ForceInvoiceProductRecalc
+        path: ForceInvoiceProductRecalcPlugin/bin/Release/**/*.dll
